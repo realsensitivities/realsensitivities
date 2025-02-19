@@ -1,5 +1,4 @@
 // Importing Three.js library
-import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.min.js';
 
 // Setting up the scene
 const scene = new THREE.Scene();
