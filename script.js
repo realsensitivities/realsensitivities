@@ -1,18 +1,4 @@
-[7:22 pm, 19/2/2025] Dᴇᴇᴇᴘᴊᴏᴛ 🤍: <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RealSensitivities</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <canvas id="liquidCanvas"></canvas>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
-[7:24 pm, 19/2/2025] Dᴇᴇᴇᴘᴊᴏᴛ 🤍: const scene = new THREE.Scene();
+const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("liquidCanvas") });
 
