@@ -4,44 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RealSensitivities</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            font-size: 3rem;
-        }
-        .container {
-            margin-top: 20%;
-        }
-    </style>
-</head>
     <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
+</head>
 <body>
-    <div class="container">
-        <h1>Welcome to RealSensitivities</h1>
-        <p>Real Sensitivities, Real Creativities</p>
-    </div>
-    <script src="script.js"></script>
-    <svg id="liquid" viewBox="0 0 1000 1000">
-  <filter id="gooey">
-    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-    <feColorMatrix in="blur" mode="matrix"
-      values="1 0 0 0 0  
-              0 1 0 0 0  
-              0 0 1 0 0  
-              0 0 0 20 -10" result="gooey" />
-    <feBlend in="SourceGraphic" in2="gooey" />
-  </filter>
-  <circle cx="200" cy="200" r="150" class="blob"></circle>
-  <circle cx="600" cy="500" r="200" class="blob"></circle>
-</svg>
+    <canvas id="liquidCanvas"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
