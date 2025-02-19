@@ -1,53 +1,58 @@
-window.onload = function () {
-    const canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
+// Importing Three.js library
+import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.min.js';
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// Setting up the scene
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-    window.addEventListener("resize", function () {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 10 + 2;
-            this.speedX = Math.random() * 2 - 1;
-            this.speedY = Math.random() * 2 - 1;
+// Creating a plane for the liquid effect
+const geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
+const material = new THREE.ShaderMaterial({
+    uniforms: {
+        time: { value: 0 }
+    },
+    vertexShader: `
+        uniform float time;
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            vec3 pos = position;
+            pos.z += sin(pos.x * 2.0 + time) * 0.1;
+            pos.z += sin(pos.y * 3.0 + time) * 0.1;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
         }
-
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-            if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+    `,
+    fragmentShader: `
+        varying vec2 vUv;
+        void main() {
+            gl_FragColor = vec4(vUv.x, vUv.y, 0.3, 1.0);
         }
+    `,
+    wireframe: false
+});
 
-        draw() {
-            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
+const plane = new THREE.Mesh(geometry, material);
+scene.add(plane);
 
-    const particlesArray = [];
-    for (let i = 0; i < 30; i++) {
-        particlesArray.push(new Particle());
-    }
+// Camera positioning
+camera.position.z = 5;
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-            particlesArray[i].draw();
-        }
-        requestAnimationFrame(animate);
-    }
+// Animation function
+function animate() {
+    requestAnimationFrame(animate);
+    material.uniforms.time.value += 0.02;
+    renderer.render(scene, camera);
+}
 
-    animate();
-};
+// Responsive design
+window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+});
+
+animate();
